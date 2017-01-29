@@ -1,0 +1,40 @@
+{
+  "name": "bookshelf-returning",
+  "version": "0.1.0",
+  "description": "Bookshelf plugin for adding returning clause to insert/update queries",
+  "author": "Josh Swan <josh@sportifik.com>",
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joshswan/bookshelf-returning.git"
+  },
+  "bugs": {
+    "url": "https://github.com/joshswan/bookshelf-returning/issues"
+  },
+  "keywords": [
+    "bookshelf",
+    "plugin",
+    "returning",
+    "postgres"
+  ],
+  "files": [
+    "index.js",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "lint": "eslint index.js"
+  },
+  "peerDependencies": {
+    "bookshelf": "^0.10.2"
+  },
+  "dependencies": {
+    "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "eslint": "^3.14.1",
+    "eslint-config-airbnb-base": "^11.0.1",
+    "eslint-plugin-import": "^2.2.0"
+  }
+}
