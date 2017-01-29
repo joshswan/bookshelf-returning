@@ -6,10 +6,14 @@
  * https://github.com/joshswan/bookshelf-returning/blob/master/LICENSE
  */
 
+const Promise = require('bluebird');
 const assign = require('lodash/assign');
+const extend = require('lodash/extend');
 
 module.exports = (bookshelf) => {
-  const Model = bookshelf.Model.extend({
+  const BaseModel = bookshelf.Model;
+
+  bookshelf.Model = BaseModel.extend({
     initialize() {
       this.on('saving', (model, attrs, options) => {
         if (options.returning) {
@@ -19,11 +23,26 @@ module.exports = (bookshelf) => {
 
       this.on('saved', (model, resp, options) => {
         if (options.returning && typeof resp[0] === 'object') {
+          // Assign returned values to attributes
           assign(this.attributes, this.parse(resp[0]));
+
+          // Update model's ID
+          this.id = this.attributes.id || null;
         }
       });
     },
-  });
+    // Override sync insert method to respect options.returning
+    sync(...args) {
+      const sync = BaseModel.prototype.sync.apply(this, args);
 
-  bookshelf.Model = Model;
+      sync.insert = Promise.method(function syncInsert() {
+        const syncing = this.syncing;
+        const attributes = syncing.format(extend(Object.create(null), syncing.attributes));
+
+        return this.query.insert(attributes, this.options.returning || syncing.idAttribute);
+      });
+
+      return sync;
+    },
+  });
 };
