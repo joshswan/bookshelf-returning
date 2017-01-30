@@ -22,12 +22,19 @@ module.exports = (bookshelf) => {
       });
 
       this.on('saved', (model, resp, options) => {
-        if (options.returning && typeof resp[0] === 'object') {
-          // Assign returned values to attributes
-          assign(this.attributes, this.parse(resp[0]));
+        if (options.returning) {
+          // Throw NoRowsUpdatedError for updates with require option and nothing returned
+          if (options.method === 'update' && options.require !== false && !resp.length) {
+            throw new this.constructor.NoRowsUpdatedError('No Rows Updated');
+          }
 
-          // Update model's ID
-          this.id = this.attributes.id || null;
+          if (typeof resp[0] === 'object') {
+            // Assign returned values to attributes
+            assign(this.attributes, this.parse(resp[0]));
+
+            // Update model's ID
+            this.id = this.attributes.id || null;
+          }
         }
       });
     },
