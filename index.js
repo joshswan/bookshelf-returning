@@ -14,7 +14,7 @@ module.exports = (bookshelf) => {
   const BaseModel = bookshelf.Model;
 
   bookshelf.Model = BaseModel.extend({
-    initialize() {
+    initialize(...args) {
       this.on('saving', (model, attrs, options) => {
         if (options.returning) {
           options.query.returning(options.returning);
@@ -37,6 +37,9 @@ module.exports = (bookshelf) => {
           }
         }
       });
+
+      // Call parent initialize method
+      BaseModel.prototype.initialize.apply(this, args);
     },
     // Override sync insert method to respect options.returning
     sync(...args) {
