@@ -13,8 +13,8 @@ const filter = require('lodash/filter');
 
 function handleResponse(resp, syncing, options) {
   if (options.returning) {
-    // Check for require option and empty result, return 0 to trigger NoRowsUpdatedError
-    if (options.method === 'update' && options.require !== false && !resp.length) return 0;
+    // Check for require option and empty result, return 0 to trigger NoRows__Error
+    if (options.method !== 'insert' && options.require !== false && !resp.length) return 0;
 
     // Save previous attributes
     // eslint-disable-next-line no-underscore-dangle
@@ -61,7 +61,7 @@ module.exports = (bookshelf) => {
           syncing,
         } = this;
 
-        if (syncing.id != null) query.where(syncing.idAttribute, syncing.id);
+        if (syncing.id != null) query.where(syncing.parse({ [syncing.idAttribute]: syncing.id }));
 
         // eslint-disable-next-line no-underscore-dangle
         if (filter(query._statements, { grouping: 'where' }).length === 0) {
@@ -71,6 +71,24 @@ module.exports = (bookshelf) => {
         const attributes = syncing.format(extend(Object.create(null), attrs));
 
         return query.update(attributes, options.returning || null)
+          .then(resp => handleResponse(resp, syncing, options));
+      });
+
+      sync.del = Promise.method(function syncDelete() {
+        const {
+          options,
+          query,
+          syncing,
+        } = this;
+
+        if (syncing.id != null) query.where(syncing.parse({ [syncing.idAttribute]: syncing.id }));
+
+        // eslint-disable-next-line no-underscore-dangle
+        if (filter(query._statements, { grouping: 'where' }).length === 0) {
+          throw new Error('A model cannot be destroyed without a "where" clause or an idAttribute.');
+        }
+
+        return query.del(options.returning || null)
           .then(resp => handleResponse(resp, syncing, options));
       });
 
