@@ -61,7 +61,7 @@ module.exports = (bookshelf) => {
           syncing,
         } = this;
 
-        if (syncing.id != null) query.where(syncing.parse({ [syncing.idAttribute]: syncing.id }));
+        if (syncing.id != null) query.where(syncing.format({ [syncing.idAttribute]: syncing.id }));
 
         // eslint-disable-next-line no-underscore-dangle
         if (filter(query._statements, { grouping: 'where' }).length === 0) {
@@ -81,7 +81,7 @@ module.exports = (bookshelf) => {
           syncing,
         } = this;
 
-        if (syncing.id != null) query.where(syncing.parse({ [syncing.idAttribute]: syncing.id }));
+        if (syncing.id != null) query.where(syncing.format({ [syncing.idAttribute]: syncing.id }));
 
         // eslint-disable-next-line no-underscore-dangle
         if (filter(query._statements, { grouping: 'where' }).length === 0) {
