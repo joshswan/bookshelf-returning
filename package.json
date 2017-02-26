@@ -1,6 +1,6 @@
 {
   "name": "bookshelf-returning",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Bookshelf plugin for adding returning clause to insert/update queries",
   "author": "Josh Swan <josh@sportifik.com>",
   "license": "MIT",
