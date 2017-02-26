@@ -1,7 +1,7 @@
 # bookshelf-returning
 [![NPM Version][npm-image]][npm-url] [![Build Status][build-image]][build-url] [![Dependency Status][depstat-image]][depstat-url] [![Dev Dependency Status][devdepstat-image]][devdepstat-url]
 
-Bookshelf plugin for PostgreSQL, MSSQL, and Oracle databases that allows for specifying a "returning" clause for insert and update queries. The model is updated with the updated values of the columns specified, giving you an updated representation of your model without needing a subsequent fetch.
+Bookshelf plugin for PostgreSQL, MSSQL, and Oracle databases that allows for specifying a "returning" clause for insert and update queries. The model is updated with the updated values of the columns specified, giving you an updated representation of your model without needing a subsequent fetch. Delete queries are also supported for returning the state of the model being deleted without requiring it to be fetched first.
 
 ## Installation
 
