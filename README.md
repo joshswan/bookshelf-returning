@@ -22,7 +22,7 @@ const User = bookshelf.Model.extend({
   tableName: 'users',
 });
 
-const user = new User({ id: 1 }).save({ first_name: 'Josh' }, { returning: '*' })
+User.forge({ id: 1 }).save({ first_name: 'Josh' }, { returning: '*' })
   .then((updated) => {
     console.log(updated.get('first_name')); // Josh
   });
