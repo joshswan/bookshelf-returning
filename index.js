@@ -17,7 +17,7 @@ function handleResponse(resp, syncing, options) {
     if (options.method !== 'insert' && options.require !== false && !resp.length) return 0;
 
     // Save previous attributes
-    // eslint-disable-next-line no-underscore-dangle
+    // eslint-disable-next-line no-multi-assign, no-underscore-dangle
     options.previousAttributes = syncing._previousAttributes = syncing.attributes;
 
     if (typeof resp[0] === 'object') {
