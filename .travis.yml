@@ -1,7 +1,7 @@
 language: node_js
 node_js:
-  - '6.12.3'
-  - '8.9.4'
-  - '9.4.0'
+  - '6.13.1'
+  - '8.10.0'
+  - '9.8.0'
 script:
   - npm run lint

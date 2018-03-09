@@ -13,7 +13,9 @@ npm install bookshelf-returning --save
 
 Apply the plugin:
 ```javascript
-bookshelf.plugin('bookshelf-returning');
+const returning = require('bookshelf-returning');
+
+bookshelf.plugin(returning);
 ```
 
 And use `returning` in your save options:
